@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+filtered_data.json
+complaint_data/
