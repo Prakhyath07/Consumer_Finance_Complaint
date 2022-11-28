@@ -18,3 +18,6 @@ class DataIngestionConfig:
     datasource_url: str
 
 
+
+
+

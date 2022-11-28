@@ -1,7 +1,7 @@
 import sys
 
 class FinanceException(Exception):
-    def __init__(self, error_message:Exception, error_details: sys):
+    def __init__(self, error_message:Exception, error_detail: sys):
         super().__init__(error_message)
         self.error_message = FinanceException.get_detailed_error_message(error_message=error_message,
                                                                          error_detail=error_detail

@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 filtered_data.json
 complaint_data/
+finance_artifact/
