@@ -65,9 +65,8 @@ class DataIngestion:
             intervals.append(self.data_ingestion_config.to_date)
         return intervals
 
-    def download_files(self, n_day_interval_url: int = None):
+    def download_files(self):
         """
-        n_month_interval_url: if not provided then information default value will be set
         =======================================================================================
         returns: List of DownloadUrl = namedtuple("DownloadUrl", ["url", "file_path", "n_retry"])
         """
@@ -232,7 +231,7 @@ def main():
     try:
         config = FinanceConfig()
         data_ingestion_config = config.get_data_ingestion_config()
-        data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config, n_day_interval=6)
+        data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config, n_retry=6)
         data_ingestion.initiate_data_ingestion()
     except Exception as e:
         raise FinanceException(e, sys)

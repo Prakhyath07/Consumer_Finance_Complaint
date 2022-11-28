@@ -5,13 +5,13 @@ import os,sys
 from collections import namedtuple
 from dataclasses import dataclass
 
-# @dataclass(frozen=True)
-# class DataIngestionMetadataInfo:
-#     from_date: str
-#     to_date : str
-#     data_file_path: str
+@dataclass(frozen=True)
+class DataIngestionMetadataInfo:
+    from_date: str
+    to_date : str
+    data_file_path: str
 
-DataIngestionMetadataInfo = namedtuple("DataIngestionMetadataInfo", ["from_date", "to_date", "data_file_path"])
+# DataIngestionMetadataInfo = namedtuple("DataIngestionMetadataInfo", ["from_date", "to_date", "data_file_path"])
 
 class Information_meta:
     def __init__(self,metadata_file_path):
@@ -30,7 +30,7 @@ class Information_meta:
                 data_file_path = data_file_path
             )
 
-            write_yaml_file(file_path = self.metadata_file_path, data = metadata_info._asdict())
+            write_yaml_file(file_path = self.metadata_file_path, data = metadata_info.__dict__)
 
         except Exception as e:
             raise FinanceException(e,sys)

@@ -13,7 +13,7 @@ class TrainingPipeline:
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
         try:
-            print("hi")
+            
             data_ingestion_config = self.finance_config.get_data_ingestion_config()
             data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
             data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
