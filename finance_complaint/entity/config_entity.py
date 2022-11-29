@@ -23,6 +23,7 @@ class DataValidationConfig:
     accepted_data_dir: str
     rejected_data_dir: str
     file_name: str
+    missing_value_threshold: float
 
 
 

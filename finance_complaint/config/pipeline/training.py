@@ -103,7 +103,8 @@ class FinanceConfig:
             data_validation_config = DataValidationConfig(
                 accepted_data_dir=accepted_data_dir,
                 rejected_data_dir=rejected_data_dir,
-                file_name=DATA_VALIDATION_FILE_NAME
+                file_name=DATA_VALIDATION_FILE_NAME,
+                missing_value_threshold= MISSING_VALUE_THRESHOLD
             )
 
             logger.info(f"Data preprocessing config: {data_validation_config}")
