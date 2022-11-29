@@ -27,6 +27,7 @@ class FinanceDataSchema:
         self.col_sub_product: str = "sub_product"
         self.col_complaint_what_happened: str = "complaint_what_happened"
         self.col_company_public_response: str = "company_public_response"
+        self.col_sub_issue: str = "sub_issue"
 
     @property
     def dataframe_schema(self) -> StructType:
