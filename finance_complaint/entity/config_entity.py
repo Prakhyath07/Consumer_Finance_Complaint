@@ -18,6 +18,13 @@ class DataIngestionConfig:
     datasource_url: str
 
 
+@dataclass(frozen=True)
+class DataValidationConfig:
+    accepted_data_dir: str
+    rejected_data_dir: str
+    file_name: str
+
+
 
 
 
