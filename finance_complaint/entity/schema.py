@@ -65,13 +65,13 @@ class FinanceDataSchema:
         ]
         return features
 
-    # @property
-    # def im_one_hot_encoding_features(self) -> List[str]:
-    #     return [f"im_{col}" for col in self.one_hot_encoding_features]
+    @property
+    def im_one_hot_encoding_features(self) -> List[str]:
+        return [f"im_{col}" for col in self.one_hot_encoding_features]
 
-    # @property
-    # def string_indexer_one_hot_features(self) -> List[str]:
-    #     return [f"si_{col}" for col in self.one_hot_encoding_features]
+    @property
+    def string_indexer_one_hot_features(self) -> List[str]:
+        return [f"si_{col}" for col in self.one_hot_encoding_features]
 
     @property
     def tf_one_hot_encoding_features(self) -> List[str]:
@@ -135,13 +135,13 @@ class FinanceDataSchema:
 
         return features
 
-    # @property
-    # def vector_assembler_output(self) -> str:
-    #     return "va_input_features"
+    @property
+    def vector_assembler_output(self) -> str:
+        return "va_input_features"
 
-    # @property
-    # def scaled_vector_input_features(self) -> str:
-    #     return "scaled_input_features"
+    @property
+    def scaled_vector_input_features(self) -> str:
+        return "scaled_input_features"
 
     @property
     def target_indexed_label(self) -> str:

@@ -25,6 +25,14 @@ class DataValidationConfig:
     file_name: str
     missing_value_threshold: float
 
+@dataclass(frozen=True)
+class DataTransformationConfig:
+    file_name: str
+    export_pipeline_dir: str
+    transformed_train_dir: str
+    transformed_test_dir: str
+    test_size: float
+
 
 
 
