@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 @dataclass(frozen=True)
 class TrainingPipelineConfig:
@@ -33,6 +34,12 @@ class DataTransformationConfig:
     transformed_test_dir: str
     test_size: float
 
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    base_accuracy: float
+    trained_model_file_path: str
+    metric_list: List
+    label_indexer_model_dir: str
 
 
 
