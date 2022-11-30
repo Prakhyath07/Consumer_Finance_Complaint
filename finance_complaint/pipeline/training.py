@@ -1,9 +1,9 @@
 from finance_complaint.exception import FinanceException
 from finance_complaint.logger import logger
 from finance_complaint.config.pipeline.training import FinanceConfig
-from finance_complaint.component import DataIngestion, DataValidation, DataTransformation, ModelTrainer
+from finance_complaint.component import DataIngestion, DataValidation, DataTransformation, ModelTrainer, ModelEvaluation
 from finance_complaint.entity.artifact_entity import (DataIngestionArtifact, DataValidationArtifact,
-DataTransformationArtifact, ModelTrainerArtifact)
+DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact)
 import sys
 
 
@@ -55,6 +55,18 @@ class TrainingPipeline:
             return model_trainer_artifact
         except Exception as e:
             raise FinanceException(e, sys)
+    
+    def start_model_evaluation(self, data_validation_artifact, model_trainer_artifact) -> ModelEvaluationArtifact:
+        try:
+            model_eval_config = self.finance_config.get_model_evaluation_config()
+            model_eval = ModelEvaluation(data_validation_artifact=data_validation_artifact,
+                                         model_trainer_artifact=model_trainer_artifact,
+                                         model_eval_config=model_eval_config
+                                         )
+            return model_eval.initiate_model_evaluation()
+        except Exception as e:
+            raise FinanceException(e, sys)
+
 
     def start(self):
         try:
@@ -63,10 +75,9 @@ class TrainingPipeline:
             data_transformation_artifact = self.start_data_transformation(
                 data_validation_artifact=data_validation_artifact)
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
-
+            model_eval_artifact = self.start_model_evaluation(data_validation_artifact=data_validation_artifact,
+                                                              model_trainer_artifact=model_trainer_artifact
+                                                              )
         except Exception as e:
             raise FinanceException(e, sys)
 
-if __name__ == "__main__":
-    pipeline = TrainingPipeline(finance_config = FinanceConfig() )
-    pipeline.start()

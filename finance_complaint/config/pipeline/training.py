@@ -1,11 +1,14 @@
 from finance_complaint.entity.config_entity import (DataIngestionConfig, TrainingPipelineConfig,
-DataValidationConfig, DataTransformationConfig, ModelTrainerConfig)
+DataValidationConfig, DataTransformationConfig, ModelTrainerConfig,
+ModelEvaluationConfig)
 from finance_complaint.constant.training_pipeline_config import *
 from finance_complaint.constant import TIMESTAMP
 from finance_complaint.logger import logger
 from finance_complaint.exception import FinanceException
 from datetime import datetime
 from finance_complaint.entity import metadata_entity
+from finance_complaint.constant.model import S3_MODEL_DIR_KEY, S3_MODEL_BUCKET_NAME
+import os, sys
 
 class FinanceConfig:
 
@@ -159,6 +162,30 @@ class FinanceConfig:
                                                       )
             logger.info(f"Model trainer config: {model_trainer_config}")
             return model_trainer_config
+        except Exception as e:
+            raise FinanceException(e, sys)
+    
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        try:
+            model_evaluation_dir = os.path.join(self.pipeline_config.artifact_dir,
+                                                MODEL_EVALUATION_DIR)
+
+            model_evaluation_report_file_path = os.path.join(
+                model_evaluation_dir, MODEL_EVALUATION_REPORT_DIR, MODEL_EVALUATION_REPORT_FILE_NAME
+            )
+
+            model_evaluation_config = ModelEvaluationConfig(
+                bucket_name=S3_MODEL_BUCKET_NAME,
+                model_dir=S3_MODEL_DIR_KEY,
+                model_evaluation_report_file_path=model_evaluation_report_file_path,
+                threshold=MODEL_EVALUATION_THRESHOLD_VALUE,
+                metric_list=MODEL_EVALUATION_METRIC_NAMES,
+
+            )
+            logger.info(f"Model evaluation config: [{model_evaluation_config}]")
+            return model_evaluation_config
+
         except Exception as e:
             raise FinanceException(e, sys)
 

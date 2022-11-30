@@ -41,6 +41,14 @@ class ModelTrainerConfig:
     metric_list: List
     label_indexer_model_dir: str
 
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    model_evaluation_report_file_path: str
+    threshold: float
+    metric_list: List
+    model_dir: str
+    bucket_name: str
+
 
 
 
