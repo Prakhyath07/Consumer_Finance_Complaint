@@ -15,6 +15,8 @@ from pyspark.sql import DataFrame
 from pyspark.ml.feature import IndexToString
 from pyspark.ml.classification import RandomForestClassifier
 from finance_complaint.utils import get_score
+from finance_complaint.data_access.model_trainer_artifact import ModelTrainerArtifactData
+
 
 
 class ModelTrainer:
@@ -27,6 +29,7 @@ class ModelTrainer:
         self.data_transformation_artifact = data_transformation_artifact
         self.model_trainer_config = model_trainer_config
         self.schema = schema
+        self.model_trainer_artifact_data = ModelTrainerArtifactData()
 
     def get_scores(self, dataframe: DataFrame, metric_names: List[str]) -> List[tuple]:
         try:
@@ -144,6 +147,7 @@ class ModelTrainer:
                                                           model_trainer_test_metric_artifact=test_metric_artifact)
 
             logger.info(f"Model trainer artifact: {model_trainer_artifact}")
+            self.model_trainer_artifact_data.save_trainer_artifact(model_trainer_artifact=model_trainer_artifact)
 
             return model_trainer_artifact
 

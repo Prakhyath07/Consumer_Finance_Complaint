@@ -7,13 +7,14 @@ from finance_complaint.entity.artifact_entity import ModelPusherArtifact, ModelT
 from pyspark.ml.pipeline import PipelineModel
 from finance_complaint.ml.estimator import S3FinanceEstimator
 import os
-
+from finance_complaint.data_access.model_pusher_artifact import ModelPusherArtifactData
 
 class ModelPusher:
 
     def __init__(self, model_trainer_artifact: ModelTrainerArtifact, model_pusher_config: ModelPusherConfig):
         self.model_trainer_artifact = model_trainer_artifact
         self.model_pusher_config = model_pusher_config
+        self.model_pusher_artifact_data = ModelPusherArtifactData()
 
     def push_model(self) -> str:
         try:
@@ -34,6 +35,7 @@ class ModelPusher:
             pushed_dir = self.push_model()
             model_pusher_artifact = ModelPusherArtifact(model_pushed_dir=pushed_dir)
             logger.info(f"Model pusher artifact: {model_pusher_artifact}")
+            self.model_pusher_artifact_data.save_pusher_artifact_artifact(model_pusher_artifact=model_pusher_artifact)
             return model_pusher_artifact
         except Exception as e:
             raise FinanceException(e, sys)

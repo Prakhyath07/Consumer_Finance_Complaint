@@ -8,10 +8,16 @@ class DataIngestionArtifact:
     metadata_file_path: str
     download_dir: str
 
+    def to_dict(self):
+        return self.__dict__
+
 @dataclass(frozen=True)
 class DataValidationArtifact:
     accepted_file_path: str
     rejected_dir: str
+
+    def to_dict(self):
+        return self.__dict__
 
 
 @dataclass(frozen=True)
@@ -20,16 +26,25 @@ class DataTransformationArtifact:
     exported_pipeline_file_path: str
     transformed_test_file_path: str
 
+    def to_dict(self):
+        return self.__dict__
+
 @dataclass(frozen=True)
 class PartialModelTrainerRefArtifact:
     trained_model_file_path: str
     label_indexer_model_file_path: str
+
+    def _asdict(self):
+        return self.__dict__
 
 @dataclass(frozen=True)
 class PartialModelTrainerMetricArtifact:
     f1_score: float
     precision_score: float
     recall_score: float
+
+    def _asdict(self):
+        return self.__dict__
 
 class ModelTrainerArtifact:
 
@@ -71,3 +86,6 @@ class ModelEvaluationArtifact:
 @dataclass(frozen=True)
 class ModelPusherArtifact:
     model_pushed_dir: str
+
+    def to_dict(self):
+        return self.__dict__

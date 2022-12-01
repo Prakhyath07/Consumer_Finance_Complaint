@@ -14,7 +14,7 @@ from pyspark.sql import DataFrame
 from finance_complaint.ml.feature import FrequencyImputer, DerivedFeatureGenerator
 from pyspark.ml.feature import IDF, Tokenizer, HashingTF
 from pyspark.sql.functions import col, rand
-
+from finance_complaint.data_access.data_transformation_artifact import DataTransformationArtifactData
 
 class DataTransformation():
 
@@ -27,6 +27,7 @@ class DataTransformation():
             self.data_val_artifact = data_validation_artifact
             self.data_tf_config = data_transformation_config
             self.schema = schema
+            self.data_transformation_artifact_data = DataTransformationArtifactData()
         except Exception as e:
             raise FinanceException(e, sys)
 
@@ -190,6 +191,7 @@ class DataTransformation():
             )
 
             logger.info(f"Data transformation artifact: [{data_tf_artifact}]")
+            self.data_transformation_artifact_data.save_transformation_artifact(data_transformation_artifact=data_tf_artifact)
             return data_tf_artifact
         except Exception as e:
             raise FinanceException(e, sys)

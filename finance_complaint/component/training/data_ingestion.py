@@ -18,6 +18,7 @@ from finance_complaint.entity.metadata_entity import Information_meta
 from finance_complaint.exception import FinanceException
 from finance_complaint.logger import logger
 from datetime import datetime
+from finance_complaint.data_access.data_ingestion_artifact import DataIngestionArtifactData
 
 DownloadUrl = namedtuple("DownloadUrl", ["url", "file_path", "n_retry"])
 
@@ -35,6 +36,7 @@ class DataIngestion:
             self.data_ingestion_config = data_ingestion_config
             self.failed_download_urls: List[DownloadUrl] = []
             self.n_retry = n_retry
+            self.data_ingestion_artifact_data = DataIngestionArtifactData()
 
         except Exception as e:
             raise FinanceException(e, sys)
@@ -214,15 +216,16 @@ class DataIngestion:
 
             feature_store_file_path = os.path.join(self.data_ingestion_config.feature_store_dir,
                                                    self.data_ingestion_config.file_name)
-            artifact = DataIngestionArtifact(
+            data_ingestion_artifact = DataIngestionArtifact(
                 feature_store_file_path=feature_store_file_path,
                 download_dir=self.data_ingestion_config.download_dir,
                 metadata_file_path=self.data_ingestion_config.metadata_file_path,
 
             )
 
-            logger.info(f"Data ingestion artifact: {artifact}")
-            return artifact
+            logger.info(f"Data ingestion artifact: {data_ingestion_artifact}")
+            self.data_ingestion_artifact_data.save_ingestion_artifact(data_ingestion_artifact=data_ingestion_artifact)
+            return data_ingestion_artifact
         except Exception as e:
             raise FinanceException(e, sys)
 

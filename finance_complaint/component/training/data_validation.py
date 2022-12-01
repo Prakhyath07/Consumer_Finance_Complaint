@@ -15,6 +15,7 @@ from finance_complaint.logger import logger
 
 from pyspark.sql.functions import lit
 from finance_complaint.entity.artifact_entity import DataValidationArtifact
+from finance_complaint.data_access.data_validation_artifact import DataValidationArtifactData
 
 COMPLAINT_TABLE = "complaint"
 ERROR_MESSAGE = "error_msg"
@@ -35,6 +36,7 @@ class DataValidation(FinanceDataSchema):
             self.data_validation_config = data_validation_config
             self.table_name = table_name
             self.schema = schema
+            self.data_validation_artifact_data = DataValidationArtifactData()
         except Exception as e:
             raise FinanceException(e, sys) from e
 
@@ -182,10 +184,11 @@ class DataValidation(FinanceDataSchema):
                                               )
             dataframe.write.parquet(accepted_file_path)
 
-            artifact = DataValidationArtifact(accepted_file_path=accepted_file_path,
+            data_validation_artifact = DataValidationArtifact(accepted_file_path=accepted_file_path,
                                               rejected_dir=self.data_validation_config.rejected_data_dir
                                               )
-            logger.info(f"Data validation artifact: [{artifact}]")
-            return artifact
+            logger.info(f"Data validation artifact: [{data_validation_artifact}]")
+            self.data_validation_artifact_data.save_validation_artifact(data_validation_artifact=data_validation_artifact)
+            return data_validation_artifact
         except Exception as e:
             raise FinanceException(e, sys)
