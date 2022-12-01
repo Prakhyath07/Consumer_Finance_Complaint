@@ -15,7 +15,7 @@ from finance_complaint.config.aws_connection_config import AWSConnectionConfig
 
 class CloudEstimator(ABC):
     key = "model-registry"
-    model_dir = "saved_models"
+    model_dir = MODEL_SAVED_DIR
     compression_format = "zip"
     model_file_name = "model.zip"
 

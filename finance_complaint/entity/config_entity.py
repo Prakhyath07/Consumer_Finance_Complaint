@@ -49,6 +49,11 @@ class ModelEvaluationConfig:
     model_dir: str
     bucket_name: str
 
+@dataclass(frozen=True)
+class ModelPusherConfig:
+    model_dir: str
+    bucket_name: str
+
 
 
 
