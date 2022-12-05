@@ -134,3 +134,4 @@ complaint_data/
 finance_artifact/
 
 saved_models/
+airflow/logs/scheduler/latest
