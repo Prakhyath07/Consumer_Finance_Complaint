@@ -85,6 +85,12 @@ jobs:
       - run:
           name: start the containers
           command: docker-compose up -d
+
+  runner-test:
+    machine: true
+    resource_class: prakhyath07/self-hosted
+    steps:
+      - run: echo "Hi I'm on Runners!"
   
 workflows:
   CICD:
