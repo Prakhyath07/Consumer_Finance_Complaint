@@ -51,7 +51,7 @@ jobs:
 
   continuous-deployment:
     machine: true
-    resource_class: machine-learning-01/self-hosted-1
+    resource_class: prakhyath07/self-hosted
     environment:
       REPOSITORY: finance-complaint
       GAR_IMAGE_NAME: finance-complaint
@@ -86,11 +86,7 @@ jobs:
           name: start the containers
           command: docker-compose up -d
 
-  runner-test:
-    machine: true
-    resource_class: prakhyath07/self-hosted
-    steps:
-      - run: echo "Hi I'm on Runners!"
+
   
 workflows:
   CICD:
